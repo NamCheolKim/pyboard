@@ -40,7 +40,7 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
 ]
 
-PROJECT_APPS = ["pyboard.apps.PyboardConfig"]
+PROJECT_APPS = ["pyboard.apps.PyboardConfig", "common.apps.CommonConfig"]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS
 
@@ -123,7 +123,9 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
