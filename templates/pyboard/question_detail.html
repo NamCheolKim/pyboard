@@ -2,12 +2,25 @@
 {% block content %}
 <div class="container my-3">
   <h2 class="border-bottom py-2">{{ question.subject }}</h2>
+  <div class="badge badge-light text-dark">
+    <span>{{ question.author.username }} &nbsp;|&nbsp;</span>
+    {% if question.modify_date %}
+    <span>{{ question.modify_date }} 수정됨</span>
+    <span>(최초 등록일: {{ question.create_date}})</span>
+    {% else %}
+    <span>{{ question.create_date }}</span>
+    {% endif %}
+  </div>
   <div class="card my-3">
     <div class="card-body">
       <div class="card-text" style="white-space: pre-line;">{{ question.content }}</div>
-      <div class="d-flex justify-content-end">
-        <div class="badge badge-light text-dark p-2">{{ question.create_date }}</div>
+      
+      {% if request.user == question.author %}
+      <div class="my-3">
+        <a href="{% url 'pyboard:question_modify' question.pk %}" class="btn btn-sm btn-outline-success">수정</a>
+        <a href="#" class="delete btn btn-sm btn-outline-danger" data-uri="{% url 'pyboard:question_delete' question.pk %}">삭제</a>
       </div>
+      {% endif %}
     </div>
   </div>
 
@@ -16,10 +29,24 @@
   {% for answer in question.answer_set.all %}
   <div class="card my-3">
     <div class="card-body">
-      <div class="card-text" style="white-space: pre-line;">{{ answer.content }}</div>
-      <div class="d-flex justify-content-end">
-        <div class="badge badge-light text-dark p-2">{{ answer.create_date }}</div>
+      <div class="badge badge-light text-dark mb-3">
+        <span>{{ answer.author.username }} &nbsp;|&nbsp;</span>
+        {% if answer.modify_date %}
+        <span>{{ answer.modify_date }} 수정됨</span>
+        <span>(최초 등록일: {{ answer.create_date}})</span>
+        {% else %}
+        <span>{{ answer.create_date }}</span>
+        {% endif %}
       </div>
+      <div class="card-text" style="white-space: pre-line;">{{ answer.content }}</div>
+      
+      {% if request.user == answer.author %}
+        <div class="my-3">
+          <a href="{% url 'pyboard:answer_modify' answer.pk %}" class="btn btn-sm btn-outline-success">수정</a>
+          <a href="#" class="delete btn btn-sm btn-outline-danger" data-uri="{% url 'pyboard:answer_delete' answer.pk %}">삭제</a>
+        </div>
+      {% endif %}
+        
     </div>
   </div>
   {% endfor %}
@@ -37,9 +64,22 @@
     {% endif %}
 
     <div class="form-group">
-      <textarea name="content" id="content" class="form-control" rows="10"></textarea>
+      <textarea name="content" id="content" {% if not user.is_authenticated %}disabled{% endif %} class="form-control" rows="10"></textarea>
     </div>
     <input type="submit" value="답변등록" class="btn btn-primary" />
   </form>
 </div>
 {% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+$(document).ready(function(){
+  $(".delete").on("click", function(){
+    if(confirm("정말 삭제하시겠습니까?\n삭제한 게시물은 복구할 수 없습니다.")){
+      location.href = $(this).data("uri");
+    }
+  });
+});
+</script>
+{% endblock %}
+  
