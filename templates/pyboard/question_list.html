@@ -17,11 +17,12 @@
       <tr class="text-center">
         <td>{{ question_list.paginator.count | sub:question_list.start_index | sub:forloop.counter0 | add:1 }}</td>
         <td class="text-left">
-          <a href="{% url 'pyboard:detail' question.pk %}">
+          <a href="{% url 'pyboard:detail' question.pk %}" style="color: black">
             {{ question.subject }}
 
             {% if question.answer_set.count > 0 %}
-              <span class="text-danger small ml-2">{{ question.answer_set.count }}</span>
+            <span class="text-danger small ml-2">{{ question.answer_set.count }}</span>
+            <i class="fas fa-comment"></i>
             {% endif %}
           </a>
         </td>
@@ -77,6 +78,7 @@
     {% endif %}
   </ul>
   <!-- Paging End -->
-  <a href="{% url 'pyboard:question' %}" class="btn btn-success">질문 등록하기</a>
+  
+  <a href="{% url 'pyboard:question' %}" class="btn btn-success"><i class="fas fa-pencil-alt"></i> 게시물 작성</a>
 </div>
 {% endblock %}
