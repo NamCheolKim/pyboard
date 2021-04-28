@@ -3,7 +3,7 @@
     {% for field in form %}
         {% for error in field.errors %} <!-- feild error -->
             <div class="alert alert-danger">
-                <strong>{{ field.label }}</strong>
+                <i class="fas fa-exclamation"></i> <strong>{{ field.label }}</strong>
                 {{ error }}
             </div>
         {% endfor %}
