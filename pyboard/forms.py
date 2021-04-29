@@ -25,3 +25,14 @@ class AnswerForm(forms.ModelForm):
     def save(self):
         answer = super().save(commit=False)
         return answer
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = models.Comment
+        fields = ("content",)
+        labels = {"content": "댓글내용"}
+
+    def save(self):
+        comment = super().save(commit=False)
+        return comment
