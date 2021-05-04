@@ -1,85 +1,86 @@
 {% extends 'base.html' %} 
 {% block content %}
 <div class="container my-3">
-  <!-- 사용자오류 표시 -->
-  {% if messages %}
-  <div class="alert alert-info my-3" role="alert">
-    {% for message in messages %}
-    <strong>{{ message.tags }}</strong>
-    <ul>
-      <li>{{ message.message }}</li>
-    </ul>
-    {% endfor %}
-  </div>
-  {% endif %}
-
-  <h2 class="border-bottom py-2">{{ question.subject }}</h2>
-  <div class="badge badge-light text-dark">
-    <span>{{ question.author.username }} &nbsp;|&nbsp;</span>
-    {% if question.modify_date %}
-    <span>{{ question.modify_date }} 수정됨</span>
-    <span>(최초 등록일: {{ question.create_date}})</span>
-    {% else %}
-    <span>{{ question.create_date }}</span>
-    {% endif %}
-  </div>
-
-  <div class="row my-3">
-    <div class="col-11">
-      <div class="card">
-        <div class="card-body">
-          <div class="card-text" style="white-space: pre-line;">{{ question.content }}</div>
-          {% if request.user == question.author %}
-          <div class="my-3 text-right">
-            <a href="{% url 'pyboard:question_modify' question.pk %}" class="btn btn-sm btn-outline-success"><i class="fas fa-eraser"></i> 수정</a>
-            <a href="#" class="delete btn btn-sm btn-outline-danger" data-uri="{% url 'pyboard:question_delete' question.pk %}"><i class="fas fa-trash-alt"></i> 삭제</a>
-          </div>
-          {% endif %}
-
-          <!-- 질문 댓글 -->
-          {% if question.comment_set.count > 0 %}
-          <div class="mt-3">
-            {% for comment in question.comment_set.all %}
-            <div class="comment py-2 text-muted">
-              <span style="color: black">{{ comment.author }}&nbsp;|&nbsp;</span>
-              {% if comment.modify_date %}
-              <span style="color: black">{{ comment.modify_date }} 수정됨</span>
-              <span style="color: black">(최초 등록일: {{ comment.create_date }})</span>
-              {% else %}
-              <span style="color: black">{{ comment.create_date }}</span>
-              {% endif %}
-              <br />
-              <span style="white-space: pre-line; color: black">{{ comment.content }}</span>
-              {% if request.user == comment.author %}
-              <a href="{% url 'pyboard:comment_modify_question' comment.pk  %}"class="small">수정</a>,
-              <a href="#" class="small delete" data-uri="{% url 'pyboard:comment_delete_question' comment.pk  %}">삭제</a>
-              {% endif %}
-            </div>
-            {% endfor %}
-          </div>
-          {% endif %}
-          <div>
-            <a href="{% url 'pyboard:comment_create_question' question.pk  %}" class="small"><small>댓글 추가 ..</small></a>
-          </div>
-          <!-- 질문 댓글 -->
+  <div class="col-sm-12 col-md-9 col-lg-10 p-2" style="height: auto !important;">
+    <div id="content" class="border-top border-secondary" style="height: auto !important;">
+      <div class="content_block" style="height: auto !important;">
+        <!-- 사용자오류 표시 -->
+        {% if messages %}
+        <div class="alert alert-info my-3" role="alert">
+          {% for message in messages %}
+          <strong>{{ message.tags }}</strong>
+          <ul>
+            <li>{{ message.message }}</li>
+          </ul>
+          {% endfor %}
         </div>
-      </div>
-    </div>
-    <!-- 질문 추천 -->
-    <div class="col-1">
-      <div class="bg-light text-center p-3 border font-weight-bolder mb-1">{{ question.voter.count }}</div>
-      <a href="#" data-uri="{% url 'pyboard:vote_question' question.pk %}" class="recommend btn btn-sm btn-info btn-block"><i class="fas fa-thumbs-up"></i> 추천</a>
-    </div>
-    <!-- 질문 추천 -->
-  </div>
+        {% endif %}
 
-  <h5 class="border-bottom my-3 py-2">{{question.answer_set.count}}개의 답변이 있습니다.<i class="fas fa-comment"></i></h5>
+        <h2 class="border-bottom py-2">{{ question.subject }}</h2>
+        <div class="badge badge-light text-dark">
+          <span>{{ question.author.username }} &nbsp;|&nbsp;</span>
+          {% if question.modify_date %}
+          <span>{{ question.modify_date }} 수정됨</span>
+          <span>(최초 등록일: {{ question.create_date}})</span>
+          {% else %}
+          <span>{{ question.create_date }}</span>
+          {% endif %}
+        </div>
+
+        <div>
+          <div>
+            <div class="card">
+              <div class="card-body">
+                <div class="card-text" style="white-space: pre-line;">{{ question.content }}</div>
+                {% if request.user == question.author %}
+                <div class="my-3 text-right">
+                  <a href="{% url 'pyboard:question_modify' question.pk %}" class="btn btn-sm btn-outline-success"><i class="fas fa-eraser"></i> 수정</a>
+                  <a href="#" class="delete btn btn-sm btn-outline-danger" data-uri="{% url 'pyboard:question_delete' question.pk %}"><i class="fas fa-trash-alt"></i> 삭제</a>
+                </div>
+                {% endif %}
+
+                <!-- 질문 댓글 -->
+                {% if question.comment_set.count > 0 %}
+                <div class="mt-3">
+                  {% for comment in question.comment_set.all %}
+                  <div class="comment py-2 text-muted">
+                    <span style="color: black">{{ comment.author }}&nbsp;|&nbsp;</span>
+                    {% if comment.modify_date %}
+                    <span style="color: black">{{ comment.modify_date }} 수정됨</span>
+                    <span style="color: black">(최초 등록일: {{ comment.create_date }})</span>
+                    {% else %}
+                    <span style="color: black">{{ comment.create_date }}</span>
+                    {% endif %}
+                    <br />
+                    <span style="white-space: pre-line; color: black">{{ comment.content }}</span>
+                    {% if request.user == comment.author %}
+                    <a href="{% url 'pyboard:comment_modify_question' comment.pk  %}"class="small">수정</a>,
+                    <a href="#" class="small delete" data-uri="{% url 'pyboard:comment_delete_question' comment.pk  %}">삭제</a>
+                    {% endif %}
+                  </div>
+                  {% endfor %}
+                </div>
+                {% endif %}
+                <div class="actions">
+                  <a href="{% url 'pyboard:comment_create_question' question.pk  %}" class="small action-btn"><small><i class="fas fa-comment"></i> 댓글</small></a>
+                  |
+                  <a href="#" data-uri="{% url 'pyboard:vote_question' question.pk %}" class="recommend small action-btn"><small><i class="fas fa-thumbs-up"></i> 추천 ({{ question.voter.count }})</small></a>
+                </div>
+                <!-- 질문 댓글 -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+  <div class="d-flex justify-content-between border-top border-secondary pt-4 my-4">
+    <h5><strong>{{question.answer_set.count}}개의 답변이 있습니다.</strong><i class="fas fa-comment"></i></h5>
+  </div>
 
   {% for answer in question.answer_set.all %}
-  <div class="row my-3">
-    <div class="col-11">
+  <div>
+    <div>
       <div class="card">
-        <div class="card-body">
+        <div class="card-body border p-3 my-3">
           <div class="badge badge-light text-dark mb-3">
             <span>{{ answer.author.username }} &nbsp;|&nbsp;</span>
             {% if answer.modify_date %}
@@ -120,19 +121,15 @@
             {% endfor %}
           </div>
           {% endif %}
-          <div>
-            <a href="{% url 'pyboard:comment_create_answer' answer.pk  %}" class="small"><small>댓글 추가 ..</small></a>
+          <div class="actions">
+            <a href="{% url 'pyboard:comment_create_answer' answer.pk  %}" class="small action-btn"><small><i class="fas fa-comment"></i> 댓글</small></a>
+            |
+            <a href="#" data-uri="{% url 'pyboard:vote_answer' answer.pk %}" class="recommend small action-btn"><small><i class="fas fa-thumbs-up"></i> 추천 ({{ answer.voter.count }})</small></a>
           </div>
           <!-- 답변 댓글 -->
         </div>
       </div>
     </div>
-    <!-- 답변 추천 -->
-    <div class="col-1">
-      <div class="bg-light text-center p-3 border font-weight-bolder mb-1">{{ answer.voter.count }}</div>
-      <a href="#" data-uri="{% url 'pyboard:vote_answer' answer.pk %}" class="recommend btn btn-sm btn-info btn-block"><i class="fas fa-thumbs-up"></i> 추천</a>
-    </div>
-    <!-- 답변추천 -->
   </div>
   {% endfor %}
   <form action="{% url 'pyboard:answer' question.pk %}" method="post" class="my-3">
@@ -149,10 +146,21 @@
     {% endif %}
 
     <div class="form-group">
-      <textarea name="content" id="content" {% if not user.is_authenticated %}disabled{% endif %} class="form-control" rows="10"></textarea>
+      {% if not user.is_authenticated %}
+        <div class="card">
+          <div class="card-body">
+            <span class="card-text">로그인 후에 답변을 등록할 수 있습니다.&nbsp;&nbsp;<a href="{% url 'common:login' %}"><i class="fas fa-sign-in-alt"></i> 로그인</a></span>
+          </div>
+        </div>
+      {% else %}
+      <textarea name="content" id="content" class="form-control" rows="10"></textarea>
+      {% endif %}
     </div>
     <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> 등록</button>
   </form>
+</div>
+</div>
+</div>
 </div>
 {% endblock %} 
 
