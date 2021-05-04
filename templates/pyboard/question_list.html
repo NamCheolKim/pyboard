@@ -9,6 +9,7 @@
         <th style="width: 50%">제목</th>
         <th>글쓴이</th>
         <th>작성일시</th>
+        <th>추천</th>
       </tr>
     </thead>
     <tbody>
@@ -28,6 +29,11 @@
         </td>
         <td>{{ question.author.username }}</td>
         <td>{{ question.create_date }}</td>
+        <td>
+          {% if question.voter.all.count > 0 %}
+            <span class=" badge badge-info px-2 py-1">{{ question.voter.all.count }}</span>
+          {% endif %} 
+        </td>
       </tr>
       {% endfor %} 
       {% else %}

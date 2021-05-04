@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import base_views, question_views, answer_views, comment_views
+from .views import base_views, question_views, answer_views, comment_views, vote_views
 
 app_name = "pyboard"
 
@@ -61,5 +61,16 @@ urlpatterns = [
         "comment/delete/answer/<int:pk>/",
         comment_views.comment_delete_answer,
         name="comment_delete_answer",
+    ),
+    # vote_views
+    path(
+        "vote/question/<int:pk>/",
+        vote_views.vote_question,
+        name="vote_question",
+    ),
+    path(
+        "vote/answer/<int:pk>/",
+        vote_views.vote_answer,
+        name="vote_answer",
     ),
 ]
