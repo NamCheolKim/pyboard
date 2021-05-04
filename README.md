@@ -1,6 +1,6 @@
 # 개발관련 질문 답변을 주고받을 수 있는 게시판 커뮤니티 프로젝트
 
-# 사용 스택
+# Stack
 
 ![Visual Studio Code](https://img.shields.io/badge/-Visual%20Studio%20Code-05122A?style=flat&logo=visual-studio-code&logoColor=007ACC)&nbsp;
 ![Python](https://img.shields.io/badge/-Python-05122A?style=flat&logo=python)&nbsp;
