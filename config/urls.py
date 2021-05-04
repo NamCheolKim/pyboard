@@ -15,11 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from pyboard import views
+from pyboard.views import base_views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("pyboard/", include("pyboard.urls", namespace="pyboard")),
     path("common/", include("common.urls", namespace="common")),
-    path("", views.IndexView.as_view(), name="index"),
+    path("", base_views.IndexView.as_view(), name="index"),
 ]
