@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 django = "==3.2"
+markdown = "*"
+tools = "*"
 
 [dev-packages]
 flake8 = "*"

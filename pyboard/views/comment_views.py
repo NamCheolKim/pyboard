@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404, redirect, reverse
+from django.shortcuts import render, get_object_or_404, redirect, reverse, resolve_url
 from django.utils import timezone
 from .. import models
 from .. import forms
@@ -20,7 +20,11 @@ def comment_create_question(request, pk):
             comment.question = question
             comment.save()
 
-            return redirect(reverse("pyboard:detail", kwargs={"pk": question.pk}))
+            return redirect(
+                "{}#comment_{}".format(
+                    resolve_url("pyboard:detail", pk=comment.question.pk), comment.pk
+                )
+            )
     else:
         form = forms.CommentForm()
     context = {"form": form}
@@ -43,8 +47,11 @@ def comment_modify_question(request, pk):
             comment.author = request.user
             comment.modify_date = timezone.now()
             comment.save()
+
             return redirect(
-                reverse("pyboard:detail", kwargs={"pk": comment.question.pk})
+                "{}#comment_{}".format(
+                    resolve_url("pyboard:detail", pk=comment.question.pk), comment.pk
+                )
             )
     else:
         form = forms.CommentForm(instance=comment)
@@ -82,7 +89,9 @@ def comment_create_answer(request, pk):
             comment.save()
 
             return redirect(
-                reverse("pyboard:detail", kwargs={"pk": comment.answer.question.pk})
+                "{}#comment_{}".format(
+                    resolve_url("pyboard:detail", pk=comment.answer.question.pk), comment.pk
+                )
             )
     else:
         form = forms.CommentForm()
@@ -108,8 +117,11 @@ def comment_modify_answer(request, pk):
             comment.author = request.user
             comment.modify_date = timezone.now()
             comment.save()
+            
             return redirect(
-                reverse("pyboard:detail", kwargs={"pk": comment.answer.question.pk})
+                "{}#comment_{}".format(
+                    resolve_url("pyboard:detail", pk=comment.answer.question.pk), comment.pk
+                )
             )
     else:
         form = forms.CommentForm(instance=comment)
