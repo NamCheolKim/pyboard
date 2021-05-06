@@ -22,21 +22,19 @@
           <div class="row justify-content-between mb-3">
             <div class="col-6">
               <div class="btn-group" role="group">
-                
-                {% if so == "popular" %}
-                <button type="button" title="" class="btn btn-sm btn-secondary so" data-so="recent" data-original-title="최신순"><i class="fas fa-list"></i></button>
-                <button type="button" title="" class="btn btn-sm btn-secondary so" data-so="recommend" data-original-title="추천순"><i class="fas fa-thumbs-up"></i></button>
-                <button type="button" title="" class="btn btn-sm btn-secondary so active" data-so="popular" data-original-title="인기순"><i class="fas fa-fire"></i></button>
-                {% elif so == "recommend"%}
+                {% if so == "recommend" %}
                 <button type="button" title="" class="btn btn-sm btn-secondary so" data-so="recent" data-original-title="최신순"><i class="fas fa-list"></i></button>
                 <button type="button" title="" class="btn btn-sm btn-secondary so active" data-so="recommend" data-original-title="추천순"><i class="fas fa-thumbs-up"></i></button>
                 <button type="button" title="" class="btn btn-sm btn-secondary so" data-so="popular" data-original-title="인기순"><i class="fas fa-fire"></i></button>
+                {% elif so == "popular" %}
+                <button type="button" title="" class="btn btn-sm btn-secondary so" data-so="recent" data-original-title="최신순"><i class="fas fa-list"></i></button>
+                <button type="button" title="" class="btn btn-sm btn-secondary so" data-so="recommend" data-original-title="추천순"><i class="fas fa-thumbs-up"></i></button>
+                <button type="button" title="" class="btn btn-sm btn-secondary so active" data-so="popular" data-original-title="인기순"><i class="fas fa-fire"></i></button>
                 {% else %}
                 <button type="button" title="" class="btn btn-sm btn-secondary so active" data-so="recent" data-original-title="최신순"><i class="fas fa-list"></i></button>
                 <button type="button" title="" class="btn btn-sm btn-secondary so" data-so="recommend" data-original-title="추천순"><i class="fas fa-thumbs-up"></i></button>
                 <button type="button" title="" class="btn btn-sm btn-secondary so" data-so="popular" data-original-title="인기순"><i class="fas fa-fire"></i></button>
                 {% endif %}
-                  
               </div>
             </div>
             <div class="col-4 input-group">
@@ -138,7 +136,7 @@
     </div>
   </div>
 </div>
-<form id="searchForm" method="get" action="{% url 'pyboard:index %}">
+<form id="searchForm" method="get" action="{% url 'pyboard:index' %}">
     <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
     <input type="hidden" id="page" name="page" value="{{ page }}">
     <input type="hidden" id="so" name="so" value="{{ so }}">

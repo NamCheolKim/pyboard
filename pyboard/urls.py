@@ -6,7 +6,7 @@ app_name = "pyboard"
 urlpatterns = [
     # base_views
     path("", base_views.IndexView.as_view(), name="index"),
-    path("<int:pk>/", base_views.DetailView.as_view(), name="detail"),
+    path("<int:pk>/", base_views.detail_view, name="detail"),
     # question_views
     path("question/create/", question_views.question_create, name="question"),
     path(

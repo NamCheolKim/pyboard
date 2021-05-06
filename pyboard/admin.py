@@ -12,3 +12,15 @@ class QuestionAdmin(admin.ModelAdmin):
         "create_date",
     )
     search_fields = ["subject"]
+
+
+# @admin.register(models.Category)
+# class CategoryAdmin(admin.ModelAdmin):
+
+#     """ Category Admin Definition """
+
+#     list_display = (
+#         "name",
+#         "description",
+#         "has_answer",
+#     )

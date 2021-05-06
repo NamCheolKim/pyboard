@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404, redirect, reverse
+from django.shortcuts import render, get_object_or_404, redirect, reverse, resolve_url
 from django.utils import timezone
 from .. import models
 from .. import forms
@@ -21,7 +21,11 @@ def answer_create(request, pk):
             answer.question = question
             answer.save()
 
-            return redirect(reverse("pyboard:detail", kwargs={"pk": question.pk}))
+            return redirect(
+                "{}#answer_{}".format(
+                    resolve_url("pyboard:detail", pk=question.pk), answer.pk
+                )
+            )
     else:
         form = forms.AnswerForm()
 
@@ -49,7 +53,9 @@ def answer_modify(request, pk):
             answer.save()
 
             return redirect(
-                reverse("pyboard:detail", kwargs={"pk": answer.question.pk})
+                "{}#answer_{}".format(
+                    resolve_url("pyboard:detail", pk=answer.question.pk), answer.pk
+                )
             )
     else:
         form = forms.AnswerForm(instance=answer)
